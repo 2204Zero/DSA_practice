@@ -1,0 +1,21 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Run C++ File (Clean)",
+            "type": "shell",
+            "command": "cls && g++ ${file} -o ${fileBasenameNoExtension} && ${fileDirname}\\${fileBasenameNoExtension}",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "echo": false
+            }
+        }
+    ]
+}
