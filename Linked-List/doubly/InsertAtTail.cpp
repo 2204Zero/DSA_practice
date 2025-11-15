@@ -17,7 +17,7 @@ class Node{
 
 };
 
-// Inserting Node in the beginning of the linked list
+// Inserting a node at the beginning of the linked list
 Node* insertAtHeadLL(Node* &head, int value){
     Node* temp = head;
     Node* newnode = new Node(value);
@@ -28,7 +28,28 @@ Node* insertAtHeadLL(Node* &head, int value){
     return newnode;
 }
 
-// Printing Linked List
+Node* insertAtTail(Node* &tail, Node* &head, int value){
+    Node* temp = tail;
+    Node* newnode = new Node(value);
+    
+    if(tail == head){
+        head -> next = newnode;
+        temp = temp -> next;
+        temp -> prev = head;
+    }
+    else {
+        tail -> next = newnode;
+        temp = temp -> next;
+        temp -> prev = tail; 
+        tail = tail -> next;
+    }
+
+    return newnode;
+}
+
+
+
+//  Printing Linked List
 Node* printLL(Node* &head){
      Node* temp = head;
      while (temp != NULL){
@@ -42,10 +63,15 @@ Node* printLL(Node* &head){
 int main (){
     class Node* newnode = new Node(10);
     Node* head = newnode;
+    Node* tail = newnode;
 
     insertAtHeadLL(head,20);
     insertAtHeadLL(head,30);
-
+    insertAtTail(tail,head,50);
     printLL(head);
+    
+    cout << "\n";
+    cout << head -> data << endl;
+    cout << tail -> data ;
     return 0;
 }
