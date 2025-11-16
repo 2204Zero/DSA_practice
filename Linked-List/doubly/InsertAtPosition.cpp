@@ -18,61 +18,72 @@ class Node{
 };
 
 // Inserting a node at the beginning of the linked list
-Node* insertAtHead(Node* &head, int value){
-    Node* temp = head;
+void insertAtHead(Node* &head, Node* &tail, int value){
+    
     Node* newnode = new Node(value);
-    temp = newnode;
-    temp -> next = head;
-    head -> prev = temp;
-    head = temp;
-    return newnode;
+
+     if(head == NULL){
+        head = newnode;
+        tail = newnode;
+        return;
+    }
+
+    newnode->next = head;
+    head->prev = newnode;
+    head = newnode;
 }
 
 // Inserting a node at the ending of the linked list
-Node* insertAtTail(Node* &tail, Node* &head, int value){
-    Node* temp = tail;
+void insertAtTail(Node* &head, Node* &tail, int value){
     Node* newnode = new Node(value);
-    
-    if(tail == head){
-        head -> next = newnode;
-        temp = temp -> next;
-        temp -> prev = head;
-    }
-    else {
-        tail -> next = newnode;
-        temp = temp -> next;
-        temp -> prev = tail; 
-        tail = tail -> next;
+
+    if(tail == NULL){
+        head = newnode;
+        tail = newnode;
+        return;
     }
 
-    return newnode;
+    tail->next = newnode;
+    newnode->prev = tail;
+    tail = newnode;
 }
 
 // Inserting a node at a given position in a linked list
-Node* insertAtPosition(Node* &head, Node* &tail, int value, int position){
-    Node* temp1 = head;
-    Node* temp2 = head;
-    Node* newnode = new Node(value);
-
-    if (position == 1){
-        return insertAtHead (head, value);
-    }
-
-    int count = 1;
-    while (count < position){
-        temp1 = temp1 -> next;
-        temp2 = temp1 -> next;
-        count ++;
-    }
-    newnode -> prev = temp1;
-    newnode -> next = temp2;
-
-    if (temp2 -> next == NULL){
-        return insertAtTail(tail,head,value);
-    }
-    return newnode;
+void insertAtPosition(Node* &head, Node* &tail, int value, int position){
     
+    if(position == 1){
+        insertAtHead(head, tail, value);
+        return;
+    }
+
+    Node* temp = head;
+    int count = 1;
+
+    while(count < position - 1 && temp != NULL){
+        temp = temp->next;
+        count++;
+    }
+
+    if(temp == NULL){
+        cout << "Position out of bounds\n";
+        return;
+    }
+
+    // Insert at end
+    if(temp->next == NULL){
+        insertAtTail(head, tail, value);
+        return;
+    }
+
+    // Insert in middle
+    Node* newnode = new Node(value);
+    newnode->next = temp->next;
+    newnode->prev = temp;
+
+    temp->next->prev = newnode;
+    temp->next = newnode;
 }
+
 
 //  Printing Linked List
 Node* printLL(Node* &head){
@@ -90,10 +101,10 @@ int main (){
     Node* head = newnode;
     Node* tail = newnode;
 
-    insertAtHead(head,20);
-    insertAtHead(head,30);
+    insertAtHead(head,tail,20);
+    insertAtHead(head,tail,30);
     insertAtTail(tail,head,50);
-    insertAtPosition(head,tail,76,4);
+    insertAtPosition(head,tail,76,3);
     printLL(head);
     
     // cout << "\n";

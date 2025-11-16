@@ -28,23 +28,18 @@ class Node{
 //     return newnode;
 // }
 
-Node* insertAtTail(Node* &tail, Node* &head, int value){
-    Node* temp = tail;
+void insertAtTail(Node* &head, Node* &tail, int value){
     Node* newnode = new Node(value);
-    
-    if(tail == head){
-        head -> next = newnode;
-        temp = temp -> next;
-        temp -> prev = head;
-    }
-    else {
-        tail -> next = newnode;
-        temp = temp -> next;
-        temp -> prev = tail; 
-        tail = tail -> next;
+
+    if(tail == NULL){
+        head = newnode;
+        tail = newnode;
+        return;
     }
 
-    return newnode;
+    tail->next = newnode;
+    newnode->prev = tail;
+    tail = newnode;
 }
 
 

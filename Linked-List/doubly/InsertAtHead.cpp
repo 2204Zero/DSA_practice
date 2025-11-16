@@ -18,15 +18,21 @@ class Node{
 };
 
 // Inserting Node in the beginning of the linked list
-Node* insertAtHeadLL(Node* &head, int value){
-    Node* temp = head;
+void insertAtHead(Node* &head, Node* &tail, int value){
+    
     Node* newnode = new Node(value);
-    temp = newnode;
-    temp -> next = head;
-    head -> prev = temp;
-    head = temp;
-    return newnode;
+
+     if(head == NULL){
+        head = newnode;
+        tail = newnode;
+        return;
+    }
+
+    newnode->next = head;
+    head->prev = newnode;
+    head = newnode;
 }
+
 
 // Printing Linked List
 Node* printLL(Node* &head){
@@ -42,9 +48,10 @@ Node* printLL(Node* &head){
 int main (){
     class Node* newnode = new Node(10);
     Node* head = newnode;
+    Node* tail = newnode;
 
-    insertAtHeadLL(head,20);
-    insertAtHeadLL(head,30);
+    insertAtHead(head, tail,20);
+    insertAtHead(head, tail,30);
 
     printLL(head);
     return 0;
